@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import HomePage from "./component/homepage";
-import DetailPage from "./component/detailpage";
+import HomePage from "./components/homepage";
+import DetailPage from "./components/detailpage";
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -12,17 +12,17 @@ function App() {
 
   const getAllCharacters = async () => {
     setLoading(true);
-    fetch("https://rickandmortyapi.com/api/character?page=1")
+    await fetch("https://rickandmortyapi.com/api/character?page=1")
       .then((res) => res.json())
       .then((res) => setCharacters(res.results))
       .catch((err) => console.error(err));
     setLoading(false);
   };
 
-  const onButtonSubmit = (e) => {
+  const onButtonSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    fetch(`https://rickandmortyapi.com/api/character?name=${searchValue}`)
+    await fetch(`https://rickandmortyapi.com/api/character?name=${searchValue}`)
       .then((res) => res.json())
       .then((res) => setCharacters(res.results))
       .catch((err) => console.error(err));
