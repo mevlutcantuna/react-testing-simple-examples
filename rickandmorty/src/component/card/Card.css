@@ -1,0 +1,17 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  cursor: pointer;
+    transition: all .1s ease-in;
+}
+
+.card:hover {
+ transform: scale(1.1);
+}
+
+.card-image {
+}
+
+.card-name {
+}
