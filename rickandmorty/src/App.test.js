@@ -5,7 +5,8 @@ test("title renders correctly", () => {
   render(<App />);
   const title = screen.getByRole("heading", { name: /rick and morty/i });
   expect(title).toBeInTheDocument();
-  
+
+
 });
 
 test("loading shows correctly", () => {
@@ -14,6 +15,6 @@ test("loading shows correctly", () => {
   expect(loadingText).toBeInTheDocument();
 });
 
-test("initial characters shows correctly", () => {
+test("initial characters shows correctly.", () => {
   render(<App />);
 });
