@@ -11,7 +11,7 @@ const Card = ({ character }) => {
   };
 
   return (
-    <div className="card" onClick={goToDetail}>
+    <div data-testid='card-item' className="card" onClick={goToDetail}>
       <img
         style={{ width: "200px" }}
         src={character.image}

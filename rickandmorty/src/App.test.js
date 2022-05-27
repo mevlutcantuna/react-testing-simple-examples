@@ -83,8 +83,8 @@ test("if data is empty, renders data not found", async () => {
       (req, res, ctx) => {
         return res(
           ctx.status(404),
-          ctx.json({ error: "There is nothing here" })
-        );
+          ctx.json({error: "There is nothing here"})
+          );
       }
     )
   );
