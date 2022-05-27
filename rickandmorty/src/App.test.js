@@ -22,7 +22,6 @@ const characterResponse = rest.get(charactersUrl, (req, res, ctx) => {
 });
 
 const handlers = [characterResponse];
-
 const server = new setupServer(...handlers);
 
 beforeAll(() => server.listen());
@@ -72,6 +71,28 @@ test("searching characters works correctly", async () => {
   const inputEl = screen.getByPlaceholderText(/search by name/i);
   const btn = screen.getByRole("button", { name: /search/i });
   userEvent.type(inputEl, "rails");
-  userEvent.click(btn, { name: /search/i });
+  userEvent.click(btn);
   expect(await screen.findByText(/rails/i)).toBeInTheDocument();
+});
+
+test("if data is empty, renders data not found", async () => {
+  render(<App />);
+  server.use(
+    rest.get(
+      "https://rickandmortyapi.com/api/character?name=rails",
+      (req, res, ctx) => {
+        return res(
+          ctx.status(404),
+          ctx.json({ error: "There is nothing here" })
+        );
+      }
+    )
+  );
+  const inputEl = screen.getByPlaceholderText(/search by name/i);
+  const btn = screen.getByRole("button", { name: /search/i });
+
+  userEvent.type(inputEl, "tttttttt");
+  userEvent.click(btn);
+
+  expect(await screen.findByText(/not found/i)).toBeVisible();
 });
