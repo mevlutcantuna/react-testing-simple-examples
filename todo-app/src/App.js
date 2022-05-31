@@ -40,12 +40,15 @@ function App() {
       <h3 style={{ marginBottom: "1rem" }}>TodoApp</h3>
       <div>
         <input
+          className="addInput"
           style={{ marginRight: "1rem" }}
           value={input}
           type="text"
           onChange={(e) => setInput(e.target.value)}
         />
-        <button onClick={addTodo}>Add</button>
+        <button className="addButton" onClick={addTodo}>
+          Add
+        </button>
       </div>
       <div>
         <ul>
