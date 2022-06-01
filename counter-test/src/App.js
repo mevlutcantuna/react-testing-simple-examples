@@ -6,9 +6,13 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={(prev) => setCount(count + 1)}>increment</button>
-      <h3>{count}</h3>
-      <button onClick={(prev) => setCount(count - 1)}>decrement</button>
+      <button className="increment" onClick={(prev) => setCount(count + 1)}>
+        increment
+      </button>
+      <h3 className='count'>{count}</h3>
+      <button className="decrement" onClick={(prev) => setCount(count - 1)}>
+        decrement
+      </button>
     </div>
   );
 }
