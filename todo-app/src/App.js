@@ -1,39 +1,52 @@
 import "./App.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { addTodo, deleteTodo, getAllTodos, updateTodo } from "./lib/api";
+import { v4 as uuidv4 } from "uuid";
 
 function App() {
   const [input, setInput] = useState("");
   const [todos, setTodos] = useState([]);
 
-  const addTodo = () => {
-    if (input.trim() === "") return alert("Please provide a new todo...");
+  const _getAllTodos = async () => {
+    const { data } = await getAllTodos();
+    setTodos(data);
+  };
+
+  const _addTodo = async () => {
     const newTodo = {
+      id: uuidv4(),
       name: input,
-      id: Math.random(),
-      checked: false,
+      completed: false,
     };
-    setTodos((prev) => [newTodo, ...prev]);
+
+    const { data } = await addTodo(newTodo);
+    setTodos((prev) => [...prev, data]);
     setInput("");
   };
 
-  const deleteTodo = (id) => {
-    const changedTods = todos.filter((todo) => todo.id !== id);
-    setTodos(changedTods);
+  const _deleteTodo = async (id) => {
+    const { data } = await deleteTodo(id);
+    const deletedTodos = todos.filter((item) => item.id !== data.id);
+    setTodos(deletedTodos);
+    _getAllTodos();
   };
 
-  const changeStatusOfTodo = (e, id) => {
-    const changedTodos = todos.map((todo) => {
-      if (todo.id === id) {
-        return {
-          ...todo,
-          checked: e.currentTarget.checked,
-        };
-      }
-      return todo;
+  const _updateTodo = async (id, todo) => {
+    const updatedTodo = { ...todo, completed: !todo.completed };
+
+    const { data } = await updateTodo(id, updatedTodo);
+    const updatedTodos = todos.map((item) => {
+      if (item.id === data.id) {
+        return data;
+      } else return item;
     });
 
-    setTodos(changedTodos);
+    setTodos(updatedTodos);
   };
+
+  useEffect(() => {
+    _getAllTodos();
+  }, []);
 
   return (
     <div className="app">
@@ -46,15 +59,20 @@ function App() {
           type="text"
           onChange={(e) => setInput(e.target.value)}
         />
-        <button className="addButton" onClick={addTodo}>
+        <button onClick={_addTodo} className="addButton">
           Add
         </button>
       </div>
       <div>
-        <ul>
-          {todos &&
-            todos.map((todo) => (
+        {todos && todos.length === 0 ? (
+          <div className="notFound" style={{ marginTop: "1rem" }}>
+            Not Found Todos
+          </div>
+        ) : (
+          <ul className="todos">
+            {todos.map((todo) => (
               <li
+                className="todo-item"
                 style={{
                   marginTop: ".5rem",
                   display: "flex",
@@ -63,21 +81,25 @@ function App() {
                 key={todo.id}
               >
                 <input
+                  onChange={() => _updateTodo(todo.id, todo)}
                   style={{ marginRight: ".25rem" }}
-                  onChange={(e) => changeStatusOfTodo(e, todo.id)}
                   type="checkbox"
-                  checked={todo.checked}
+                  checked={todo.completed}
                 />
                 <span>{todo.name}</span>
                 <button
-                  onClick={() => deleteTodo(todo.id)}
+                  onClick={() => _deleteTodo(todo.id)}
                   style={{ marginLeft: "1rem" }}
                 >
                   Delete
                 </button>
               </li>
             ))}
-        </ul>
+          </ul>
+        )}
+        <div className="leftTodos" style={{ marginTop: "2rem" }}>
+          {todos.filter((item) => item.completed !== true).length} left
+        </div>
       </div>
     </div>
   );
