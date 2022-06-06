@@ -1,9 +1,3 @@
 {
-  "todos": [
-    {
-      "id": "61b0a6e9-16c0-4189-b58f-e31751ae56d5",
-      "name": "Todo 1",
-      "completed": true
-    }
-  ]
+  "todos": []
 }

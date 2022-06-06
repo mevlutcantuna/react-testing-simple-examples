@@ -4,53 +4,58 @@ import { v4 as uuidv4 } from "uuid";
 describe("app tests", () => {
   beforeEach(() => {
     cy.visit("/");
+    cy.intercept("GET", "**/todos", { fixture: "todos.json" });
   });
 
-  it("if there is no todo, shows not found ", () => {
-    cy.get(".notFound").contains(/not found/i);
+  // all todos load correctly
+  it("all todos load correctly", () => {
+    cy.get(".leftTodos").should("have.text", "3 left");
   });
 
-  it("get todos", () => {
-    cy.request("GET", "http://localhost:3000/todos");
-    cy.get(".leftTodos").should("have.text", "0 left");
-  });
-
-  it("add todo", () => {
+  // add a new todo correctly
+  it("add a new todo correctly", () => {
     const newTodo = {
-      name: "Todo Example",
-      id: uuidv4(),
+      id: 20,
+      name: "New Todo 20",
       completed: false,
     };
-    cy.intercept("POST", "http://localhost:3000/todos", newTodo);
-    cy.get(".addInput")
-      .type("Todo Example")
-      .should("have.value", "Todo Example");
-    cy.get(".addButton").should("contains", /add/i).click();
-    cy.get(".addInput").should("have.value", "");
+    cy.intercept("POST", "**/todos", newTodo);
 
-    cy.get(".leftTodos").should("have.text", "1 left");
-  });
-
-  it("delete Todo", () => {
-    cy.get(".addInput").type("Todo Item");
+    cy.get(".addInput").type(newTodo.name);
     cy.get(".addButton").click();
 
-    cy.get(".leftTodos").contains("1 left");
+    cy.get(".todos").contains(newTodo.name).should("be.visible");
+  });
 
-    cy.get(".todo-item")
+  // delete a todo correctly
+  it.only("delete a todo correctly", () => {
+    cy.intercept("DELETE", "**/todos/1", {});
+    cy.get(".todos")
       .first()
       .contains(/delete/i)
       .click();
 
-    cy.get(".leftTodos").contains("0 left");
+    const leftTodos = [
+      {
+        name: "Todo 2",
+        id: "2",
+        completed: false,
+      },
+      {
+        name: "Go to Garden",
+        id: "3",
+        completed: false,
+      },
+    ];
+
+    cy.intercept("GET", "**/todos", {
+      body: leftTodos,
+    });
+
+    //cy.get(".leftTodos").should("have.text", "2 left");
   });
 
-  it.only("check a todo", () => {
-    cy.get(".addInput").type("Todo 1");
-    cy.get(".addButton").click();
-
-    cy.get(".leftTodos").contains(/1 left/i);
-    cy.get(".todo-item").first().get('[type="checkbox"]').click();
-    cy.get(".leftTodos").contains(/0 left/i);
-  });
+  // check todo correctly
+  // uncheck todo correctly
+  // delete all todo,shows not found todo correctly
 });
