@@ -25,10 +25,9 @@ function App() {
   };
 
   const _deleteTodo = async (id) => {
-    const { data } = await deleteTodo(id);
-    const deletedTodos = todos.filter((item) => item.id !== data.id);
+    await deleteTodo(id);
+    const deletedTodos = todos.filter((item) => item.id !== id);
     setTodos(deletedTodos);
-    _getAllTodos();
   };
 
   const _updateTodo = async (id, todo) => {

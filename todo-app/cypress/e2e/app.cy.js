@@ -1,10 +1,9 @@
 /// <reference types="cypress" />
-import { v4 as uuidv4 } from "uuid";
 
 describe("app tests", () => {
   beforeEach(() => {
     cy.visit("/");
-    cy.intercept("GET", "**/todos", { fixture: "todos.json" });
+    cy.intercept("GET", "**/todos", { fixture: "todos.json" }).as("deneme");
   });
 
   // all todos load correctly
@@ -28,34 +27,84 @@ describe("app tests", () => {
   });
 
   // delete a todo correctly
-  it.only("delete a todo correctly", () => {
-    cy.intercept("DELETE", "**/todos/1", {});
+  it("delete a todo correctly", () => {
+    cy.intercept("DELETE", "**/todos/1", {}).as("del-todo");
+
     cy.get(".todos")
       .first()
       .contains(/delete/i)
       .click();
 
-    const leftTodos = [
-      {
-        name: "Todo 2",
-        id: "2",
-        completed: false,
-      },
-      {
-        name: "Go to Garden",
-        id: "3",
-        completed: false,
-      },
-    ];
+    cy.wait("@del-todo");
 
-    cy.intercept("GET", "**/todos", {
-      body: leftTodos,
-    });
-
-    //cy.get(".leftTodos").should("have.text", "2 left");
+    cy.get(".leftTodos").should("have.text", "2 left");
   });
 
   // check todo correctly
+  it("check todo correctly", () => {
+    const updatedTodo = {
+      name: "Buy Milk",
+      id: "1",
+      completed: true,
+    };
+
+    cy.intercept("PUT", "**/todos/*", { body: updatedTodo }).as("check-todo");
+    cy.get('.todo-item > [type="checkbox"]').first().check();
+
+    cy.wait("@check-todo");
+
+    cy.get(".leftTodos").contains("2 left");
+  });
+
   // uncheck todo correctly
+  it("uncheck todo correctly", () => {
+    cy.get(".leftTodos").contains("3 left");
+
+    // check last todo
+    const checkedTodo = {
+      name: "Go to Garden",
+      id: "3",
+      completed: true,
+    };
+
+    cy.intercept("PUT", "**/todos/*", { body: checkedTodo }).as("check-todo");
+    cy.get('.todo-item > [type="checkbox"]').last().check();
+    cy.wait("@check-todo");
+
+    cy.get(".leftTodos").contains("2 left");
+
+    // uncheck last todo
+    const uncheckedTodo = {
+      name: "Go to Garden",
+      id: "3",
+      completed: false,
+    };
+
+    cy.intercept("PUT", "**/todos/*", { body: uncheckedTodo }).as(
+      "uncheck-todo"
+    );
+    cy.get('.todo-item > [type="checkbox"]').last().uncheck();
+    cy.wait("@uncheck-todo");
+
+    cy.get(".leftTodos").contains("3 left");
+  });
+
   // delete all todo,shows not found todo correctly
+  it.only("delete all todo,shows not found todo correctly", () => {
+    cy.intercept("DELETE", "**/todos/*", {}).as("del-todo");
+
+    cy.get(".todos > .todo-item").each(($el, index, $list) => {
+      cy.intercept("DELETE", "**/todos/*", {}).as("del-todo");
+      cy.get(".todo-item")
+        .last()
+        .contains(/delete/i)
+        .click();
+
+      cy.wait("@del-todo");
+    });
+
+    cy.get(".notFound").should("be.visible");
+
+    cy.get(".leftTodos").contains(/0 left/i);
+  });
 });
