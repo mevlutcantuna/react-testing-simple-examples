@@ -2,4 +2,4 @@
 
 - ## Todo App
 - ## Counter
-- ## Rick and Morty Charackters
+- ## Rick and Morty Characters
