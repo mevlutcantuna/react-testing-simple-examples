@@ -57,6 +57,7 @@ function App() {
           value={input}
           type="text"
           onChange={(e) => setInput(e.target.value)}
+          placeholder="add new todo..."
         />
         <button onClick={_addTodo} className="addButton">
           Add

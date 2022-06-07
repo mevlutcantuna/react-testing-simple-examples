@@ -90,7 +90,7 @@ describe("app tests", () => {
   });
 
   // delete all todo,shows not found todo correctly
-  it.only("delete all todo,shows not found todo correctly", () => {
+  it("delete all todo,shows not found todo correctly", () => {
     cy.intercept("DELETE", "**/todos/*", {}).as("del-todo");
 
     cy.get(".todos > .todo-item").each(($el, index, $list) => {
