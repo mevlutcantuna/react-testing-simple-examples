@@ -46,7 +46,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Rick and Morty</h1>
+      <h1 data-cy="header">Rick and Morty</h1>
       <BrowserRouter>
         <Routes>
           <Route

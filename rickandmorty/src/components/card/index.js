@@ -11,7 +11,12 @@ const Card = ({ character }) => {
   };
 
   return (
-    <div data-testid='card-item' className="card" onClick={goToDetail}>
+    <div
+      data-cy="card-item"
+      data-testid="card-item"
+      className="card"
+      onClick={goToDetail}
+    >
       <img
         style={{ width: "200px" }}
         src={character.image}

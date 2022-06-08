@@ -12,7 +12,9 @@ const SearchBar = ({ searchValue, onButtonSubmit, setSearchValue }) => {
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
-        <button onClick={onButtonSubmit}>Search</button>
+        <button data-cy="search" onClick={onButtonSubmit}>
+          Search
+        </button>
       </form>
     </div>
   );

@@ -17,7 +17,7 @@ const HomePage = ({ searchBarProps, loading, characters }) => {
           }}
         >
           {loading ? (
-            <h3>Loading...</h3>
+            <h3 data-cy="loading">Loading...</h3>
           ) : (
             <>
               {characters &&
