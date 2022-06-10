@@ -36,6 +36,7 @@ const LoginPage = () => {
 
   return (
     <div className="container">
+      <span>Cennet</span>
       <h1 className="container__title">Login</h1>
       <form onSubmit={onLoginSubmit} className="container__form">
         <input

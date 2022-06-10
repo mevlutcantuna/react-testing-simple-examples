@@ -7,5 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Mevlüt Can Tuna",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^10.0.3",
+    "eslint-plugin-cypress": "^2.12.1",
+    "msw": "^0.42.1"
+  }
 }
