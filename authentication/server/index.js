@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const router = require("./routes");
 
 const app = express();
 dotenv.config();
@@ -12,6 +13,8 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("<h3>Welcome to API</h3>");
 });
+
+app.use(router);
 
 mongoose
   .connect(process.env.CONNECT_DB, {

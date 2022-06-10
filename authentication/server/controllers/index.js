@@ -1,4 +1,4 @@
-const User = require("../models/user");
+const User = require("../models/");
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -23,7 +23,6 @@ const login = async (req, res) => {
 
 const signup = async (req, res, next) => {
   const { fullName, email, password } = req.body;
-
   try {
     // the account exists
     const userExists = await User.findOne({ email });
@@ -34,6 +33,7 @@ const signup = async (req, res, next) => {
     }
 
     const user = new User({ fullName, email, password });
+
     await user
       .save()
       .then(() => {
