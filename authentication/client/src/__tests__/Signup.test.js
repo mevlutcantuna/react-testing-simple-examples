@@ -4,10 +4,12 @@ import userEvent from "@testing-library/user-event";
 import Signup from "../components/SignupPage";
 
 import { BrowserRouter } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 const MockSignup = () => {
+  const history = createBrowserHistory({ initialEntries: ["/signup"] });
   return (
-    <BrowserRouter>
+    <BrowserRouter history={history}>
       <Signup />
     </BrowserRouter>
   );
@@ -40,13 +42,16 @@ describe("Signup Page Tests", () => {
   });
 
   it("signup correctly", async () => {
+    // not completed
     userEvent.type(screen.getByPlaceholderText(/fullname/i), "new user");
     userEvent.type(screen.getByPlaceholderText(/email/i), "newuser@gmail.com");
     userEvent.type(screen.getByPlaceholderText(/password/i), "123123");
     userEvent.click(screen.getByRole("button", /signup/i));
   });
 
-  it.only("go to login link works correctly", async () => {
+  it("go to login link works correctly", async () => {
+    // not completed
     userEvent.click(screen.getByText(/Go To Login/i));
+    //expect(await screen.findByText("Cennet")).toBeInTheDocument();
   });
 });

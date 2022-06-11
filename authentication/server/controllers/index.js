@@ -7,12 +7,12 @@ const login = async (req, res) => {
     // account verification
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ errorMessage: "The Account Not Found..." });
+      return res.status(404).json({ errorMessage: "The Account Not Found..." });
     }
 
     // check password
     if (password !== user.password) {
-      return res.status(400).json({ errorMessage: "The Password is Wrong..." });
+      return res.status(403).json({ errorMessage: "The Password is Wrong..." });
     }
 
     return res.status(200).json({ user });
