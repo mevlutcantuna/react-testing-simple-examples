@@ -70,7 +70,7 @@ const SignupPage = () => {
           placeholder="Password"
           className="form-item"
         />
-        <button type="submit" className="form-button">
+        <button data-cy="signup-btn" type="submit" className="form-button">
           Signup
         </button>
         <div className="form-notification">

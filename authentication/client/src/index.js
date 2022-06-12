@@ -8,6 +8,7 @@ import LoginPage from "./components/LoginPage";
 import SignupPage from "./components/SignupPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.Fragment>
     <BrowserRouter>

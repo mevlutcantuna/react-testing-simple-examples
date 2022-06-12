@@ -7,7 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 const MockSignup = () => {
-  const history = createBrowserHistory({ initialEntries: ["/signup"] });
+  const history = createBrowserHistory();
+
   return (
     <BrowserRouter history={history}>
       <Signup />
@@ -52,6 +53,6 @@ describe("Signup Page Tests", () => {
   it("go to login link works correctly", async () => {
     // not completed
     userEvent.click(screen.getByText(/Go To Login/i));
-    //expect(await screen.findByText("Cennet")).toBeInTheDocument();
+    // expect(await screen.findByText(/cennet/i)).toBeInTheDocument();
   });
 });

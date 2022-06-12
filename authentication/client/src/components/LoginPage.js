@@ -55,7 +55,7 @@ const LoginPage = () => {
           type="password"
           placeholder="Password"
         />
-        <button className="form-button" type="submit">
+        <button data-cy="login-btn" className="form-button" type="submit">
           Login
         </button>
         <div className="form-notification">

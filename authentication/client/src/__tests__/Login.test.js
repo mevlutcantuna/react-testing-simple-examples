@@ -44,7 +44,10 @@ describe("Login Page Tests", () => {
   });
 
   it("login correctly", () => {
+    // not completed
     userEvent.type(screen.getByPlaceholderText(/email/i), "mttuna90@gmail.com");
     userEvent.type(screen.getByPlaceholderText(/password/i), "123123");
+
+    //expect(screen.getByText(/app page/i)).toBeInTheDocument();
   });
 });
