@@ -78,7 +78,9 @@ const SignupPage = () => {
         </div>
       </form>
       <div>
-        <Link to="/login">Go To Login</Link>
+        <Link data-cy="link-item" to="/login">
+          Go To Login
+        </Link>
       </div>
     </div>
   );
