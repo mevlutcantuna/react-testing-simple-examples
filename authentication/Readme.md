@@ -9,17 +9,14 @@ In this project, user can login and signup and when user signs up,user's infos k
 ```
     yarn client
 ```
-
+```
     yarn test
-
 ```
 
 - For Cypress
 
 ```
-
     yarn cypress
-
 ```
 
 ## Setup
@@ -27,61 +24,41 @@ In this project, user can login and signup and when user signs up,user's infos k
 To setup the project, run the following on your terminal in the order:
 
 ```
-
     git clone https://github.com/mevlutcantuna/react-testing-simple-examples
-
 ```
 
 ```
-
     cd react-testing-simple-examples
-
 ```
 
 ```
-
     cd authentication
-
 ```
 
 - For Client
 
 ```
-
     cd client
-
 ```
 
 ```
-
     npm install
-
 ```
 
 ```
-
     npm dev
-
 ```
 
 - For Server
 
 ```
-
     cd server
-
 ```
 
 ```
-
     npm install
-
 ```
 
 ```
-
     npm dev
-
-```
-
 ```
