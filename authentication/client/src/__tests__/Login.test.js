@@ -44,7 +44,7 @@ describe("Login Page Tests", () => {
   });
 
   it("login correctly", () => {
-    // not completed
+    // not completed yet
     userEvent.type(screen.getByPlaceholderText(/email/i), "mttuna90@gmail.com");
     userEvent.type(screen.getByPlaceholderText(/password/i), "123123");
 
